@@ -7,6 +7,7 @@ import me.dio.gatomia.handler.AppInvalidModelException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TreatmentTest {
@@ -48,6 +49,18 @@ class TreatmentTest {
             treatment.treat();
         });
         assertEquals(thrownNull.getMessage(), "Cat meow is required");
+    }
+
+    @Test
+    void CatAlreadyTreated() {
+        cat.setBehavior(BehaviorType.CARINHOSO);
+        treatment.setMeow(MeowType.VARIOSCURTOS);
+        treatment.setCat(cat);
+        treatment.setTreated(true);
+        assertThatThrownBy(() -> treatment.treat())
+                .isInstanceOf(AppInvalidModelException.class)
+                .hasMessageContaining("Cat already treated");
+
     }
 
     @Test
