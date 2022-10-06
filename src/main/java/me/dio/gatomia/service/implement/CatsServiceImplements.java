@@ -3,7 +3,6 @@ package me.dio.gatomia.service.implement;
 import lombok.RequiredArgsConstructor;
 import me.dio.gatomia.enumeration.BehaviorType;
 import me.dio.gatomia.handler.AppRepositoryException;
-import me.dio.gatomia.handler.AppRequestException;
 import me.dio.gatomia.model.Cats;
 import me.dio.gatomia.repository.CatsRepository;
 import me.dio.gatomia.service.CatsService;
@@ -33,8 +32,8 @@ public class CatsServiceImplements implements CatsService {
     @Override
     public Cats getCat(Long catId) {
         try {
-            return catsRepository.findById(catId).orElseThrow(() -> new AppRepositoryException("Cat not found: " + catId));
-        } catch (AppRequestException e) {
+            return catsRepository.findById(catId).orElseThrow(() -> new AppRepositoryException("Cat not found in Repository: " + catId));
+        } catch (RuntimeException e) {
             throw new AppRepositoryException("Cat not found: " + catId, e);
         }
     }
@@ -77,7 +76,7 @@ public class CatsServiceImplements implements CatsService {
         try {
             catsRepository.deleteById(catId);
         } catch (Exception e) {
-            throw new AppRepositoryException("Could not delet cat", e);
+            throw new AppRepositoryException("Could not delete cat", e);
         }
     }
 }

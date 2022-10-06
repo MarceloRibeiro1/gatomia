@@ -13,7 +13,7 @@ class TreatmentTest {
 
     Cats cat = new Cats();
     Owner owner = new Owner();
-    Treatment treatment = new Treatment();
+    Treatment treatment = new Treatment().builder().id(1L).build();
 
     @BeforeEach
     void setUp() {
@@ -126,6 +126,33 @@ class TreatmentTest {
             treatment.setMeow(null);
         });
         assertEquals("Meow must not be null", thrownNull.getMessage());
+    }
+
+    @Test
+    void shouldGetId() {
+        assertEquals(treatment.getId(), 1L);
+    }
+
+    @Test
+    void shouldSetId() {
+        treatment.setId(2L);
+        assertEquals(treatment.getId(), 2L);
+    }
+
+    @Test
+    void ShouldBuild() {
+        Treatment treatment1 = Treatment.builder()
+                .id(1L)
+                .cat(cat)
+                .isTreated(false)
+                .meow(MeowType.INTERCALADO)
+                .owner(owner)
+                .build();
+        assertEquals(treatment1.getId(), 1L);
+        assertFalse(treatment1.isTreated());
+        assertEquals(treatment1.getMeow(), MeowType.INTERCALADO);
+        assertEquals(treatment1.getOwner(), owner);
+        assertInstanceOf(Treatment.class, treatment1);
     }
 
 }
