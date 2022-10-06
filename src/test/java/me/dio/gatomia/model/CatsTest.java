@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CatsTest {
@@ -16,14 +14,12 @@ class CatsTest {
     Cats cat;
     Long catId = 1L;
     String catName = "test";
-    Treatment treatment = new Treatment();
     BehaviorType behaviorType = BehaviorType.BRINCALHAO;
     Long cat2Id = 2L;
     String cat2Name = "SecondName";
     Owner validOwner2 = new Owner();
-    List<Treatment> treatment2 = List.of(new Treatment());
     BehaviorType behaviorType2 = BehaviorType.ARISCO;
-    Cats fullCat = new Cats(cat2Id, cat2Name, validOwner2, treatment2, behaviorType2);
+    Cats fullCat = new Cats(cat2Id, cat2Name, validOwner2, behaviorType2);
 
     @BeforeEach
     void setUp() {
@@ -41,17 +37,12 @@ class CatsTest {
     @Test
     void setInvalidName() {
         String blankName = "";
-        String nullName = null;
 
-        AppInvalidModelException thrownBlank = assertThrows(AppInvalidModelException.class, () -> {
-            cat.setName(blankName);
-        });
+        AppInvalidModelException thrownBlank = assertThrows(AppInvalidModelException.class, () -> cat.setName(blankName));
 
         Assertions.assertEquals("Name must not be empty", thrownBlank.getMessage());
 
-        AppInvalidModelException thrownNull = assertThrows(AppInvalidModelException.class, () -> {
-            cat.setName(nullName);
-        });
+        AppInvalidModelException thrownNull = assertThrows(AppInvalidModelException.class, () -> cat.setName(null));
 
         Assertions.assertEquals("Name must not be empty", thrownNull.getMessage());
     }
@@ -64,9 +55,7 @@ class CatsTest {
 
     @Test
     void setInvalidOwner() {
-        AppInvalidModelException thrownNull = assertThrows(AppInvalidModelException.class, () -> {
-            cat.setOwner(null);
-        });
+        AppInvalidModelException thrownNull = assertThrows(AppInvalidModelException.class, () -> cat.setOwner(null));
 
         Assertions.assertEquals("Owner must not be null", thrownNull.getMessage());
     }
@@ -84,9 +73,7 @@ class CatsTest {
 
     @Test
     void setInvalidBehavior() {
-        AppInvalidModelException thrownNull = assertThrows(AppInvalidModelException.class, () -> {
-            cat.setBehavior(null);
-        });
+        AppInvalidModelException thrownNull = assertThrows(AppInvalidModelException.class, () -> cat.setBehavior(null));
 
         Assertions.assertEquals("Behavior must not be null", thrownNull.getMessage());
     }
@@ -125,22 +112,16 @@ class CatsTest {
     }
 
     @Test
-    void shouldGetTreatment() {
-        assertEquals(fullCat.getTreatment(), treatment2);
-    }
-
-    @Test
     void noArgsConstructor() {
         assertInstanceOf(Cats.class, new Cats());
     }
 
     @Test
     void AllArgsConstructor() {
-        Cats catConstructor = new Cats(catId, catName, validOwner, List.of(treatment), behaviorType);
+        Cats catConstructor = new Cats(catId, catName, validOwner, behaviorType);
         assertEquals(catConstructor.getId(), catId);
         assertEquals(catConstructor.getName(), catName);
         assertEquals(catConstructor.getOwner(), validOwner);
-        assertEquals(catConstructor.getTreatment(), List.of(treatment));
         assertEquals(catConstructor.getBehavior(), behaviorType);
         assertInstanceOf(Cats.class, catConstructor);
     }
@@ -151,13 +132,11 @@ class CatsTest {
                 .id(catId)
                 .name(catName)
                 .owner(validOwner)
-                .treatment(List.of(treatment))
                 .behavior(behaviorType)
                 .build();
         assertEquals(catBuilder.getId(), catId);
         assertEquals(catBuilder.getName(), catName);
         assertEquals(catBuilder.getOwner(), validOwner);
-        assertEquals(catBuilder.getTreatment(), List.of(treatment));
         assertEquals(catBuilder.getBehavior(), behaviorType);
         assertInstanceOf(Cats.class, catBuilder);
     }

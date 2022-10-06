@@ -2,10 +2,7 @@ package me.dio.gatomia.service.implement;
 
 import me.dio.gatomia.dto.owner.CreateOwnerDto;
 import me.dio.gatomia.dto.owner.OwnerDto;
-import me.dio.gatomia.enumeration.BehaviorType;
-import me.dio.gatomia.model.Cats;
 import me.dio.gatomia.model.Owner;
-import me.dio.gatomia.model.Treatment;
 import me.dio.gatomia.repository.OwnerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,14 +27,8 @@ class OwnerServiceImplementsTest {
     String ownerName1 = "OwnerName1";
     String ownerName2 = "OwnerName2";
     Long ownerId2 = 2L;
-    List<Treatment> treatment = List.of(new Treatment());
-    Cats cat = Cats.builder()
-            .id(1L)
-            .name("CatName")
-            .behavior(BehaviorType.ARISCO)
-            .build();
-    List<Cats> cats2 = List.of(cat);
-    Owner owner2 = new Owner(ownerId2, ownerName2, cats2, treatment);
+    
+    Owner owner2 = new Owner(ownerId2, ownerName2);
 
     OwnerDto ownerDto;
     CreateOwnerDto createOwnerDto = new CreateOwnerDto(ownerName1);
