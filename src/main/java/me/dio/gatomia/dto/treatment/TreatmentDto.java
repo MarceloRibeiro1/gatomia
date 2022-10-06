@@ -1,23 +1,21 @@
-package me.dio.gatomia.dto;
+package me.dio.gatomia.dto.treatment;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import me.dio.gatomia.enumeration.MeowType;
 import me.dio.gatomia.model.Treatment;
 
 @AllArgsConstructor
-@Data
-@Builder
+@Getter
+@NonNull
+@NoArgsConstructor
 public class TreatmentDto {
-    private final Long treatmentId;
-    @NonNull
-    private final MeowType type;
-    @NonNull
-    private final Long ownerId;
-    @NonNull
-    private final Long catId;
+    private Long treatmentId;
+    private MeowType type;
+    private Long ownerId;
+    private Long catId;
 
     public TreatmentDto(Treatment treatment) {
         this.treatmentId = treatment.getId();

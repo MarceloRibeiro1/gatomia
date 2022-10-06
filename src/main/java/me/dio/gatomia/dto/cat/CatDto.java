@@ -1,8 +1,8 @@
-package me.dio.gatomia.dto;
+package me.dio.gatomia.dto.cat;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import me.dio.gatomia.enumeration.BehaviorType;
 import me.dio.gatomia.model.Cats;
@@ -11,16 +11,14 @@ import javax.validation.constraints.Size;
 
 @Getter
 @AllArgsConstructor
-@Builder
+@NonNull
+@NoArgsConstructor
 public class CatDto {
-    private final Long catId;
-    @NonNull
+    private Long catId;
     @Size(min = 1)
-    private final String catName;
-    @NonNull
-    private final BehaviorType behavior;
-    @NonNull
-    private final Long ownerId;
+    private String catName;
+    private BehaviorType behavior;
+    private Long ownerId;
 
     public CatDto(Cats cat) {
         this.catId = cat.getId();

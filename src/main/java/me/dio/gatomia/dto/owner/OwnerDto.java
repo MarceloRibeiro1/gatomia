@@ -1,21 +1,21 @@
-package me.dio.gatomia.dto;
+package me.dio.gatomia.dto.owner;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import me.dio.gatomia.model.Owner;
 
 import javax.validation.constraints.Size;
 
-@Data
+@Getter
 @AllArgsConstructor
-@Builder
+@NonNull
+@NoArgsConstructor
 public class OwnerDto {
-    private final Long ownerId;
-    @NonNull
+    private Long ownerId;
     @Size(min = 1)
-    private final String ownerName;
+    private String ownerName;
 
     public OwnerDto(Owner owner) {
         this.ownerId = owner.getId();

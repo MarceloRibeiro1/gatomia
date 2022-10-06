@@ -1,6 +1,7 @@
 package me.dio.gatomia.service;
 
-import me.dio.gatomia.dto.TreatmentDto;
+import me.dio.gatomia.dto.treatment.CreateTreatmentDto;
+import me.dio.gatomia.dto.treatment.TreatmentDto;
 import me.dio.gatomia.enumeration.Solutions;
 import me.dio.gatomia.model.Treatment;
 import org.springframework.stereotype.Service;
@@ -8,15 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TreatmentService {
 
-    TreatmentDto NewTreatment(TreatmentDto treatmentDto);
+    TreatmentDto createTreatment(CreateTreatmentDto createTreatmentDto);
 
-    Solutions Treat(TreatmentDto treatmentDto);
+    void treat(TreatmentDto treatmentDto);
 
-    Solutions ConsultTreatmentSolution(TreatmentDto treatmentDto);
+    Solutions consultTreatmentSolution(Long treatmentId);
 
-    Treatment GetTreatment(TreatmentDto treatmentDto);
+    Treatment findTreatment(Long treatmentId);
 
-    TreatmentDto EditTreatment(TreatmentDto treatmentDto);
+    TreatmentDto editTreatment(TreatmentDto treatmentDto);
 
-    void DeleteTreatment(TreatmentDto treatmentDto);
+    void deleteTreatment(Long treatmentId);
 }

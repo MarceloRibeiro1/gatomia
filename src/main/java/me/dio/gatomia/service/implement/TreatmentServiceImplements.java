@@ -1,7 +1,8 @@
 package me.dio.gatomia.service.implement;
 
 import lombok.RequiredArgsConstructor;
-import me.dio.gatomia.dto.TreatmentDto;
+import me.dio.gatomia.dto.treatment.CreateTreatmentDto;
+import me.dio.gatomia.dto.treatment.TreatmentDto;
 import me.dio.gatomia.enumeration.Solutions;
 import me.dio.gatomia.handler.AppRepositoryException;
 import me.dio.gatomia.model.Treatment;
@@ -22,35 +23,37 @@ public class TreatmentServiceImplements implements TreatmentService {
 
 
     @Override
-    public TreatmentDto NewTreatment(TreatmentDto treatmentDto) {
+    public TreatmentDto createTreatment(CreateTreatmentDto createTreatmentDto) {
         Treatment treatment = new Treatment();
-        treatment.setOwner(ownerRepository.findById(treatmentDto.getOwnerId()).orElseThrow(() -> new AppRepositoryException("Could not find owner")));
-        treatment.setCat(catsRepository.findById(treatmentDto.getCatId()).orElseThrow(() -> new AppRepositoryException("Could not find cat")));
-        treatment.setMeow(treatmentDto.getType());
+        treatment.setOwner(ownerRepository.findById(createTreatmentDto.getOwnerId()).orElseThrow(() -> new AppRepositoryException("Could not find owner")));
+        treatment.setCat(catsRepository.findById(createTreatmentDto.getCatId()).orElseThrow(() -> new AppRepositoryException("Could not find cat")));
+        treatment.setMeow(createTreatmentDto.getType());
         treatmentRepository.save(treatment);
         return new TreatmentDto(treatment);
     }
 
     @Override
-    public Solutions Treat(TreatmentDto treatmentDto) {
-        return this.GetTreatment(treatmentDto).treat();
+    public void treat(TreatmentDto treatmentDto) {
+        Treatment treatment = this.findTreatment(treatmentDto.getTreatmentId());
+        treatment.treat();
+        treatmentRepository.save(treatment);
     }
 
     @Override
-    public Solutions ConsultTreatmentSolution(TreatmentDto treatmentDto) {
-        return this.GetTreatment(treatmentDto).getTreat();
+    public Solutions consultTreatmentSolution(Long treatmentId) {
+        return this.findTreatment(treatmentId).getTreat();
     }
 
     @Override
-    public Treatment GetTreatment(TreatmentDto treatmentDto) {
-        return treatmentRepository.findById(treatmentDto.getTreatmentId())
-                .orElseThrow(() -> new RuntimeException("Treatment not found: " + treatmentDto.getTreatmentId()));
+    public Treatment findTreatment(Long treatmentId) {
+        return treatmentRepository.findById(treatmentId)
+                .orElseThrow(() -> new RuntimeException("Treatment not found: " + treatmentId));
 
     }
 
     @Override
-    public TreatmentDto EditTreatment(TreatmentDto treatmentDto) {
-        Treatment treatment = this.GetTreatment(treatmentDto);
+    public TreatmentDto editTreatment(TreatmentDto treatmentDto) {
+        Treatment treatment = this.findTreatment(treatmentDto.getTreatmentId());
         treatment.setMeow(treatmentDto.getType());
         treatment.setOwner(ownerRepository.findById(treatmentDto.getOwnerId()).orElseThrow(() -> new AppRepositoryException("Could not find owner")));
         treatment.setCat(catsRepository.findById(treatmentDto.getCatId()).orElseThrow(() -> new AppRepositoryException("Could not find cat")));
@@ -59,7 +62,7 @@ public class TreatmentServiceImplements implements TreatmentService {
     }
 
     @Override
-    public void DeleteTreatment(TreatmentDto treatmentDto) {
-        treatmentRepository.deleteById(treatmentDto.getTreatmentId());
+    public void deleteTreatment(Long treatmentId) {
+        treatmentRepository.deleteById(treatmentId);
     }
 }

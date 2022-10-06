@@ -9,16 +9,8 @@ import java.time.ZonedDateTime;
 
 @ControllerAdvice
 public class AppExceptionHandler {
-
-    @ExceptionHandler(AppRequestException.class)
-    public ResponseEntity<ResponseApiException> handleApiRequestException(AppRequestException ae) {
-        ResponseApiException responseApiException = new ResponseApiException(ae.getMessage(), ae.getStatus(), ZonedDateTime.now());
-
-        return new ResponseEntity<ResponseApiException>(responseApiException, responseApiException.getHttpStatus());
-    }
-
-    @ExceptionHandler({AppInvalidModelException.class, AppRepositoryException.class})
-    public ResponseEntity<ResponseApiException> handleApiInvalidModelException(RuntimeException ae) {
+    @ExceptionHandler({AppInvalidModelException.class})
+    public ResponseEntity<ResponseApiException> handleApiInvalidModelException(AppInvalidModelException ae) {
         ResponseApiException responseApiException = new ResponseApiException(ae.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now());
 
         return new ResponseEntity<ResponseApiException>(responseApiException, responseApiException.getHttpStatus());
