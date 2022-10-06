@@ -1,15 +1,16 @@
 package me.dio.gatomia.service;
 
+import me.dio.gatomia.dto.OwnerDto;
 import me.dio.gatomia.model.Owner;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface OwnerService {
-    Owner createOwner(String ownerName);
+    OwnerDto createOwner(OwnerDto ownerDto);
 
-    Owner getOwner(Long ownerId);
+    Owner getOwner(OwnerDto ownerDto);
 
-    Owner editOwnerName(Long ownerId, String ownerName);
+    OwnerDto editOwner(OwnerDto ownerDto);
 
-    void deleteUser(Long ownerId);
+    void deleteUser(OwnerDto ownerDto);
 }

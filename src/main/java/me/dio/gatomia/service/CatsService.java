@@ -1,20 +1,16 @@
 package me.dio.gatomia.service;
 
-import me.dio.gatomia.enumeration.BehaviorType;
+import me.dio.gatomia.dto.CatDto;
 import me.dio.gatomia.model.Cats;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface CatsService {
-    Cats createCats(String catName, Long ownerId, BehaviorType behavior);
+    CatDto createCats(CatDto catDto);
 
-    Cats getCat(Long catId);
+    Cats getCat(CatDto catDto);
 
-    Cats editCat(Long catId, String catName);
+    CatDto editCat(CatDto catDto);
 
-    Cats editCat(Long catId, Long ownerId);
-
-    Cats editCat(Long catId, BehaviorType behavior);
-
-    void deleteCat(Long catId);
+    void deleteCat(CatDto catDto);
 }
