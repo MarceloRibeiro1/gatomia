@@ -39,18 +39,18 @@ class TreatmentServiceImplementsTest {
     @InjectMocks
     TreatmentServiceImplements treatmentServiceImplements;
 
-    Cats cat = new Cats().builder().id(1L).behavior(BehaviorType.ARISCO).build();
-    Owner owner = new Owner().builder().id(1L).build();
+    Cats cat = Cats.builder().id(1L).behavior(BehaviorType.ARISCO).build();
+    Owner owner = Owner.builder().id(1L).build();
     MeowType meowType = MeowType.INTERCALADO;
     TreatmentDto treatmentDto;
     CreateTreatmentDto createTreatmentDto = new CreateTreatmentDto(meowType, owner.getId(), cat.getId());
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         treatmentDto = new TreatmentDto(1L, meowType, owner.getId(), cat.getId());
         Mockito.when(catsRepository.findById(cat.getId())).thenReturn(Optional.ofNullable(cat));
         Mockito.when(ownerRepository.findById(owner.getId())).thenReturn(Optional.ofNullable(owner));
-        Mockito.when(treatmentRepository.findById(treatmentDto.getTreatmentId())).thenReturn(Optional.ofNullable(new Treatment().builder()
+        Mockito.when(treatmentRepository.findById(treatmentDto.getTreatmentId())).thenReturn(Optional.ofNullable(Treatment.builder()
                 .id(1L)
                 .cat(cat)
                 .meow(meowType)
@@ -80,7 +80,7 @@ class TreatmentServiceImplementsTest {
 
     @Test
     void consultTreatment() {
-        Treatment a = new Treatment().builder()
+        Treatment a = Treatment.builder()
                 .id(1L)
                 .cat(cat)
                 .meow(meowType)
