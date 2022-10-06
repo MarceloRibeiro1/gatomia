@@ -10,6 +10,7 @@ import me.dio.gatomia.repository.CatsRepository;
 import me.dio.gatomia.repository.OwnerRepository;
 import me.dio.gatomia.repository.TreatmentRepository;
 import me.dio.gatomia.service.TreatmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -17,8 +18,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TreatmentServiceImplements implements TreatmentService {
 
+    @Autowired
     private final TreatmentRepository treatmentRepository;
+    @Autowired
     private final CatsRepository catsRepository;
+    @Autowired
     private final OwnerRepository ownerRepository;
 
 
@@ -55,7 +59,6 @@ public class TreatmentServiceImplements implements TreatmentService {
     public TreatmentDto editTreatment(TreatmentDto treatmentDto) {
         Treatment treatment = this.findTreatment(treatmentDto.getTreatmentId());
         treatment.setMeow(treatmentDto.getType());
-        treatment.setOwner(ownerRepository.findById(treatmentDto.getOwnerId()).orElseThrow(() -> new AppRepositoryException("Could not find owner")));
         treatment.setCat(catsRepository.findById(treatmentDto.getCatId()).orElseThrow(() -> new AppRepositoryException("Could not find cat")));
         treatmentRepository.save(treatment);
         return new TreatmentDto(treatment);

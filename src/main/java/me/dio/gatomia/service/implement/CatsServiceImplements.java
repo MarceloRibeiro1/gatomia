@@ -5,24 +5,29 @@ import me.dio.gatomia.dto.cat.CatDto;
 import me.dio.gatomia.dto.cat.CreateCatDto;
 import me.dio.gatomia.handler.AppRepositoryException;
 import me.dio.gatomia.model.Cats;
+import me.dio.gatomia.model.Owner;
 import me.dio.gatomia.repository.CatsRepository;
 import me.dio.gatomia.repository.OwnerRepository;
 import me.dio.gatomia.service.CatsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class CatsServiceImplements implements CatsService {
 
+    @Autowired
     private OwnerRepository ownerRepository;
+    @Autowired
     private CatsRepository catsRepository;
 
     @Override
     public CatDto createCats(CreateCatDto createCatDto) {
         Cats cat = new Cats();
+        Owner owner = ownerRepository.findById(createCatDto.getOwnerId())
+                .orElseThrow(() -> new AppRepositoryException("Could not find owner" + createCatDto.getOwnerId()));
         cat.setName(createCatDto.getCatName());
-        cat.setOwner(ownerRepository.findById(createCatDto.getOwnerId())
-                .orElseThrow(() -> new AppRepositoryException("Could not find owner" + createCatDto.getOwnerId())));
+        cat.setOwner(owner);
         cat.setBehavior(createCatDto.getBehavior());
         catsRepository.save(cat);
         return new CatDto(cat);
@@ -38,8 +43,6 @@ public class CatsServiceImplements implements CatsService {
     public CatDto editCat(CatDto catDto) {
         Cats cat = this.findCat(catDto.getCatId());
         cat.setName(catDto.getCatName());
-        cat.setOwner(ownerRepository.findById(catDto.getOwnerId())
-                .orElseThrow(() -> new AppRepositoryException("Could not find owner" + catDto.getOwnerId())));
         cat.setBehavior(catDto.getBehavior());
         catsRepository.save(cat);
         return new CatDto(cat);

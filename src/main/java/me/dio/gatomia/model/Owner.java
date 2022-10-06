@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import me.dio.gatomia.handler.AppInvalidModelException;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "owner")
@@ -23,12 +22,6 @@ public class Owner {
 
     @Column(name = "owner_name")
     private String name;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Cats> cats;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Treatment> TreatedCats;
 
     public Long getId() {
         return id;
@@ -47,25 +40,4 @@ public class Owner {
         this.name = name;
     }
 
-    public List<Cats> getCats() {
-        return cats;
-    }
-
-    /*
-    public void setCats(List<Cats> cats) {
-        if (cats == null) throw new AppInvalidModelException("Cats is required");
-        this.cats = cats;
-    }
-    */
-
-    public List<Treatment> getTreatedCats() {
-        return TreatedCats;
-    }
-
-    /*
-    public void setTreatedCats(List<Treatment> treatedCats) {
-        if (treatedCats == null) throw new AppInvalidModelException("TreatedCats is required");
-        this.TreatedCats = treatedCats;
-    }
-     */
 }

@@ -1,5 +1,6 @@
 package me.dio.gatomia.controller;
 
+import io.swagger.annotations.Api;
 import me.dio.gatomia.dto.cat.CatDto;
 import me.dio.gatomia.dto.cat.CreateCatDto;
 import me.dio.gatomia.dto.owner.CreateOwnerDto;
@@ -19,14 +20,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api")
+@Api(value = "/api")
 public class gatomiaController {
 
     @Autowired
-    private static CatsServiceImplements catsServiceImplements;
+    private CatsServiceImplements catsServiceImplements;
     @Autowired
-    private static TreatmentServiceImplements treatmentServiceImplements;
+    private TreatmentServiceImplements treatmentServiceImplements;
     @Autowired
-    private static OwnerServiceImplements ownerServiceImplements;
+    private OwnerServiceImplements ownerServiceImplements;
 
     @PostMapping(value = "/create/owner")
     public ResponseEntity<OwnerDto> createOwner(@RequestBody CreateOwnerDto createOwnerDto) {

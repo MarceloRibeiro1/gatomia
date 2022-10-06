@@ -84,14 +84,6 @@ class CatsServiceImplementsTest {
     }
 
     @Test
-    void ShouldEditCatOwner() {
-        catsServiceImplements.editCat(editedCatDto);
-        ArgumentCaptor<Cats> catsCaptor = ArgumentCaptor.forClass(Cats.class);
-        Mockito.verify(catsRepository).save(catsCaptor.capture());
-        assertEquals(catsCaptor.getValue().getOwner().getId(), editedOwner.getId());
-    }
-
-    @Test
     void ShouldEditCatBehavior() {
         catsServiceImplements.editCat(editedCatDto);
         ArgumentCaptor<Cats> catsCaptor = ArgumentCaptor.forClass(Cats.class);

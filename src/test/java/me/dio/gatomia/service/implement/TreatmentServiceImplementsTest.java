@@ -104,7 +104,6 @@ class TreatmentServiceImplementsTest {
         treatmentServiceImplements.editTreatment(treatmentDto);
         ArgumentCaptor<Treatment> treatCaptor = ArgumentCaptor.forClass(Treatment.class);
         Mockito.verify(treatmentRepository).save(treatCaptor.capture());
-        assertEquals(treatCaptor.getValue().getOwner().getId(), treatmentDto.getOwnerId());
         assertEquals(treatCaptor.getValue().getCat().getId(), treatmentDto.getCatId());
         assertEquals(treatCaptor.getValue().getMeow(), treatmentDto.getType());
     }

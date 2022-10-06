@@ -1,5 +1,6 @@
 package me.dio.gatomia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,6 @@ import me.dio.gatomia.enumeration.BehaviorType;
 import me.dio.gatomia.handler.AppInvalidModelException;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "cats")
@@ -23,11 +23,9 @@ public class Cats {
     @Column(name = "cat_name")
     private String name;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private Owner owner;
-
-    @OneToMany
-    private List<Treatment> treatment;
 
     @Enumerated
     private BehaviorType behavior;
@@ -57,17 +55,6 @@ public class Cats {
         if (owner == null) throw new AppInvalidModelException("Owner must not be null");
         this.owner = owner;
     }
-
-    public List<Treatment> getTreatment() {
-        return treatment;
-    }
-
-    /*
-    public void setTreatment(Treatment treatment) {
-        if (treatment == null) throw new AppInvalidModelException("Treatment must not be null");
-        this.treatment = treatment;
-    }
-    */
 
     public BehaviorType getBehavior() {
         return behavior;
