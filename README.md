@@ -4,7 +4,7 @@ Esta Api foi desenvolvida durante o Bootcamp Potência Tech powered by iFood da 
 :construction: Projeto em construção :construction:
 
 # :hammer: Funcionalidades do projeto
-###Você tem um gato em casa? Seu gato já miou e você não soube o por quê?
+### Você tem um gato em casa? Seu gato já miou e você não soube o por quê?
 `Seus problemas acabaram`
 Com o GatoMia você pode cadastrar seu gato, colocando nome e comportamento e nossa Api sofisticadíssima te responde com uma solução dizendo o que seu gato realmente quer.
 
