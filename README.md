@@ -23,5 +23,5 @@ Com o GatoMia você pode cadastrar seu gato, colocando nome e comportamento e no
 ### :o: 100% Dos Models e Services testados
 Foram aplicados testes unitários em todos os modelos e serviços, futuramente terão testes automatizados no controller também
 
-### :page_with_curl: Clean Archteture
+### :page_with_curl: Clean Code
 
