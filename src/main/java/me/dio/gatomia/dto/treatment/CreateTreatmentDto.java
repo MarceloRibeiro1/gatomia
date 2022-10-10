@@ -3,15 +3,18 @@ package me.dio.gatomia.dto.treatment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import me.dio.gatomia.enumeration.MeowType;
+
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @Getter
-@NonNull
 @NoArgsConstructor
 public class CreateTreatmentDto {
+    @NotNull
     private MeowType type;
+    @NotNull
     private Long ownerId;
+    @NotNull
     private Long catId;
 }

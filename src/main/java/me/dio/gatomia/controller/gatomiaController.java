@@ -8,6 +8,7 @@ import me.dio.gatomia.dto.owner.OwnerDto;
 import me.dio.gatomia.dto.treatment.CreateTreatmentDto;
 import me.dio.gatomia.dto.treatment.TreatmentDto;
 import me.dio.gatomia.enumeration.Solutions;
+import me.dio.gatomia.handler.AppRepositoryException;
 import me.dio.gatomia.model.Cats;
 import me.dio.gatomia.model.Owner;
 import me.dio.gatomia.model.Treatment;
@@ -17,6 +18,8 @@ import me.dio.gatomia.service.implement.TreatmentServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -31,7 +34,7 @@ public class gatomiaController {
     private OwnerServiceImplements ownerServiceImplements;
 
     @PostMapping(value = "/create/owner")
-    public ResponseEntity<OwnerDto> createOwner(@RequestBody CreateOwnerDto createOwnerDto) {
+    public ResponseEntity<OwnerDto> createOwner(@Valid @RequestBody CreateOwnerDto createOwnerDto) {
         try {
             OwnerDto createdOwner = ownerServiceImplements.createOwner(createOwnerDto);
             return ResponseEntity.ok(createdOwner);
@@ -41,12 +44,13 @@ public class gatomiaController {
     }
 
     @PostMapping(value = "/edit/owner/")
-    public ResponseEntity<OwnerDto> editOwner(@RequestBody OwnerDto ownerDto) {
+    public ResponseEntity<OwnerDto> editOwner(@Valid @RequestBody OwnerDto ownerDto) {
         try {
             OwnerDto editedOwner = ownerServiceImplements.editOwner(ownerDto);
             return ResponseEntity.ok(editedOwner);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not edit owner  "
+                    + ownerDto.getOwnerId() + " error: " + e.getMessage(), e);
         }
     }
 
@@ -71,7 +75,7 @@ public class gatomiaController {
     }
 
     @PostMapping(value = "/create/cat")
-    public ResponseEntity<CatDto> createCat(@RequestBody CreateCatDto createCatDto) {
+    public ResponseEntity<CatDto> createCat(@Valid @RequestBody CreateCatDto createCatDto) {
         try {
             CatDto createdCat = catsServiceImplements.createCats(createCatDto);
             return ResponseEntity.ok(createdCat);
@@ -81,7 +85,7 @@ public class gatomiaController {
     }
 
     @PostMapping(value = "/edit/cat/")
-    public ResponseEntity<CatDto> editCat(@RequestBody CatDto catDto) {
+    public ResponseEntity<CatDto> editCat(@Valid @RequestBody CatDto catDto) {
         try {
             CatDto editedCat = catsServiceImplements.editCat(catDto);
             return ResponseEntity.ok(editedCat);
@@ -111,7 +115,7 @@ public class gatomiaController {
     }
 
     @PostMapping(value = "/create/treatment")
-    public ResponseEntity<TreatmentDto> createTreatment(@RequestBody CreateTreatmentDto createTreatment) {
+    public ResponseEntity<TreatmentDto> createTreatment(@Valid @RequestBody CreateTreatmentDto createTreatment) {
         try {
             TreatmentDto createdTreatment = treatmentServiceImplements.createTreatment(createTreatment);
             return ResponseEntity.ok(createdTreatment);
@@ -121,7 +125,7 @@ public class gatomiaController {
     }
 
     @PostMapping(value = "/edit/treatment")
-    public ResponseEntity<TreatmentDto> editTreatment(@RequestBody TreatmentDto treatmentDto) {
+    public ResponseEntity<TreatmentDto> editTreatment(@Valid @RequestBody TreatmentDto treatmentDto) {
         try {
             TreatmentDto editedTreatment = treatmentServiceImplements.editTreatment(treatmentDto);
             return ResponseEntity.ok(editedTreatment);
@@ -131,7 +135,7 @@ public class gatomiaController {
     }
 
     @PatchMapping(value = "/treatment/treat")
-    public ResponseEntity<Void> treat(@RequestBody TreatmentDto treatmentDto) {
+    public ResponseEntity<Void> treat(@Valid @RequestBody TreatmentDto treatmentDto) {
         try {
             treatmentServiceImplements.treat(treatmentDto);
             return ResponseEntity.ok().build();
