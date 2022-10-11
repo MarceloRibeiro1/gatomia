@@ -105,7 +105,7 @@ public class Treatment {
         return isTreated;
     }
 
-    public void setTreated(boolean treated) {
+    private void setTreated(boolean treated) {
         isTreated = treated;
     }
 }

@@ -56,7 +56,7 @@ class TreatmentTest {
         cat.setBehavior(BehaviorType.CARINHOSO);
         treatment.setMeow(MeowType.VARIOSCURTOS);
         treatment.setCat(cat);
-        treatment.setTreated(true);
+        treatment.treat()
         assertThatThrownBy(() -> treatment.treat())
                 .isInstanceOf(AppInvalidModelException.class)
                 .hasMessageContaining("Cat already treated");

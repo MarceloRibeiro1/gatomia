@@ -1,5 +1,5 @@
 package me.dio.gatomia.enumeration;
 
 public enum MeowType {
-    VARIOSCURTOS, VARIOSLONGOS, UMCURTO, UMLONGO, INTERCALADO;
+    MANY_SHORTS, MANY_LONGS, ONE_SHORT, ONE_LONG, PERIODIC;
 }

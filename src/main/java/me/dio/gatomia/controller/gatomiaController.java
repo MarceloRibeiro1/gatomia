@@ -33,104 +33,110 @@ public class gatomiaController {
     @Autowired
     private OwnerServiceImplements ownerServiceImplements;
 
-    @PostMapping(value = "/create/owner")
+    @PostMapping(value = "/owner/create")
     public ResponseEntity<OwnerDto> createOwner(@Valid @RequestBody CreateOwnerDto createOwnerDto) {
         try {
             OwnerDto createdOwner = ownerServiceImplements.createOwner(createOwnerDto);
             return ResponseEntity.ok(createdOwner);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not create owner, error: " + e.getMessage(), e);
         }
     }
 
-    @PostMapping(value = "/edit/owner/")
-    public ResponseEntity<OwnerDto> editOwner(@Valid @RequestBody OwnerDto ownerDto) {
+    @PutMapping(value = "/owner/{ownerId}/edit")
+    public ResponseEntity<OwnerDto> editOwner(@Valid @RequestBody OwnerDto ownerDto, @PathVariable("ownerId") Long ownerId) {
         try {
             OwnerDto editedOwner = ownerServiceImplements.editOwner(ownerDto);
             return ResponseEntity.ok(editedOwner);
         } catch (Exception e) {
-            throw new AppRepositoryException("Could not edit owner  "
-                    + ownerDto.getOwnerId() + " error: " + e.getMessage(), e);
+            throw new AppRepositoryException("Could not edit owner "
+                    + ownerId + ", error: " + e.getMessage(), e);
         }
     }
 
-    @GetMapping(value = "/find/owner/{ownerId}")
+    @GetMapping(value = "/owner/{ownerId}/find")
     public ResponseEntity<Owner> findOwner(@PathVariable("ownerId") Long ownerId) {
         try {
             Owner owner = ownerServiceImplements.getOwner(ownerId);
             return ResponseEntity.ok(owner);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not find owner "
+                    + ownerId + ", error: " + e.getMessage(), e);
         }
     }
 
-    @DeleteMapping(value = "/delete/owner/{ownerId}")
+    @DeleteMapping(value = "/owner/{ownerId}/delete")
     public ResponseEntity<Void> deleteOwner(@PathVariable("ownerId") Long ownerId) {
         try {
             ownerServiceImplements.deleteOwner(ownerId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not delete owner "
+                    + ownerId + ", error: " + e.getMessage(), e);
         }
     }
 
-    @PostMapping(value = "/create/cat")
+    @PostMapping(value = "/cat/create")
     public ResponseEntity<CatDto> createCat(@Valid @RequestBody CreateCatDto createCatDto) {
         try {
             CatDto createdCat = catsServiceImplements.createCats(createCatDto);
             return ResponseEntity.ok(createdCat);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not create cat, error: " + e.getMessage(), e);
         }
     }
 
-    @PostMapping(value = "/edit/cat/")
-    public ResponseEntity<CatDto> editCat(@Valid @RequestBody CatDto catDto) {
+    @PutMapping(value = "/cat/{catId}/edit")
+    public ResponseEntity<CatDto> editCat(@Valid @RequestBody CatDto catDto, @PathVariable("catId") Long catId) {
         try {
             CatDto editedCat = catsServiceImplements.editCat(catDto);
             return ResponseEntity.ok(editedCat);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not edit cat "
+                    + catId + ", error: " + e.getMessage(), e);
         }
     }
 
-    @GetMapping(value = "/find/cat/{catId}")
+    @GetMapping(value = "/cat/{catId}/find")
     public ResponseEntity<Cats> findCat(@PathVariable("catId") Long catId) {
         try {
             Cats cats = catsServiceImplements.findCat(catId);
             return ResponseEntity.ok(cats);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not find cat "
+                    + catId + ", error: " + e.getMessage(), e);
         }
     }
 
-    @DeleteMapping(value = "/delete/cat/{catId}")
+    @DeleteMapping(value = "/cat/{catId}/delete")
     public ResponseEntity<Void> deleteCat(@PathVariable("catId") Long catId) {
         try {
             catsServiceImplements.deleteCat(catId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not delete cat "
+                    + catId + ", error: " + e.getMessage(), e);
         }
     }
 
-    @PostMapping(value = "/create/treatment")
+    @PostMapping(value = "/treatment/create")
     public ResponseEntity<TreatmentDto> createTreatment(@Valid @RequestBody CreateTreatmentDto createTreatment) {
         try {
             TreatmentDto createdTreatment = treatmentServiceImplements.createTreatment(createTreatment);
             return ResponseEntity.ok(createdTreatment);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not create treatment, error: " + e.getMessage(), e);
         }
     }
 
-    @PostMapping(value = "/edit/treatment")
-    public ResponseEntity<TreatmentDto> editTreatment(@Valid @RequestBody TreatmentDto treatmentDto) {
+    @PutMapping(value = "/treatment/{treatmentId}/edit")
+    public ResponseEntity<TreatmentDto> editTreatment(@Valid @RequestBody TreatmentDto treatmentDto,@PathVariable("tratmentId") Long treatmentId) {
         try {
             TreatmentDto editedTreatment = treatmentServiceImplements.editTreatment(treatmentDto);
             return ResponseEntity.ok(editedTreatment);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not edit treatment "
+                    + treatmentId + ", error: " + e.getMessage(), e);
         }
     }
 
@@ -140,37 +146,41 @@ public class gatomiaController {
             treatmentServiceImplements.treat(treatmentDto);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not finish treatment "
+                    + treatmentId + ", error: " + e.getMessage(), e);
         }
     }
 
-    @GetMapping(value = "/find/treatment/{treatmentId}")
+    @GetMapping(value = "/treatment/{treatmentId}/find")
     public ResponseEntity<Treatment> findTreatment(@PathVariable("treatmentId") Long treatmentId) {
         try {
             Treatment treatment = treatmentServiceImplements.findTreatment(treatmentId);
             return ResponseEntity.ok(treatment);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not find treatment "
+                    + treatmentId + ", error: " + e.getMessage(), e);
         }
     }
 
-    @GetMapping(value = "/find/treatment/solution/{treatment}")
+    @GetMapping(value = "/treatment/{treatment}/find/solution")
     public ResponseEntity<Solutions> findSolution(@PathVariable("treatment") Long treatmentId) {
         try {
             Solutions solutions = treatmentServiceImplements.consultTreatmentSolution(treatmentId);
             return ResponseEntity.ok(solutions);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not find treatment "
+                    + treatmentId + " solution, error: " + e.getMessage(), e);
         }
     }
 
-    @DeleteMapping(value = "/delete/treatment/{treatment}")
+    @DeleteMapping(value = "/treatment/{treatment}/delete")
     public ResponseEntity<Void> deleteTreatment(@PathVariable("treatment") Long treatmentId) {
         try {
             treatmentServiceImplements.deleteTreatment(treatmentId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AppRepositoryException("Could not delete treatment "
+                    + treatmentId + ", error: " + e.getMessage(), e);
         }
     }
 }
