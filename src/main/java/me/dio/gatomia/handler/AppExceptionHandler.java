@@ -13,6 +13,13 @@ public class AppExceptionHandler {
     public ResponseEntity<ResponseApiException> handleApiInvalidModelException(AppInvalidModelException ae) {
         ResponseApiException responseApiException = new ResponseApiException(ae.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now());
 
-        return new ResponseEntity<ResponseApiException>(responseApiException, responseApiException.getHttpStatus());
+        return new ResponseEntity<>(responseApiException, responseApiException.httpStatus());
+    }
+
+    @ExceptionHandler({AppRepositoryException.class})
+    public ResponseEntity<ResponseApiException> handleApiInvalidModelException(AppRepositoryException ae) {
+        ResponseApiException responseApiException = new ResponseApiException(ae.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now());
+
+        return new ResponseEntity<>(responseApiException, responseApiException.httpStatus());
     }
 }
